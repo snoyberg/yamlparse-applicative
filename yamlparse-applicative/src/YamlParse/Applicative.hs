@@ -132,6 +132,7 @@ module YamlParse.Applicative
 
     -- * Parsing a file
     readConfigFile,
+    readConfigFileWithEnv,
     readFirstConfigFile,
   )
 where

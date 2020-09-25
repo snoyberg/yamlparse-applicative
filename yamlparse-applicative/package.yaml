@@ -8,7 +8,8 @@ copyright:           "2020 Tom Sydney Kerckhove"
 synopsis:            Declaritive configuration parsing with free docs
 description:         See https://github.com/NorfairKing/yamlparse-applicative
 
-
+extra-source-files:
+- test/data/*.yaml
 
 dependencies:
 - base >= 4.7 && < 5
@@ -54,3 +55,4 @@ tests:
     - text
     - unordered-containers
     - yamlparse-applicative
+    - path

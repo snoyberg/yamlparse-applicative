@@ -10,6 +10,7 @@ module YamlParse.Applicative.IO where
 import qualified Data.ByteString as SB
 import qualified Data.Text as T
 import qualified Data.Yaml as Yaml
+import qualified Data.Yaml.Config as Yaml
 import Path
 import Path.IO
 import System.Exit
@@ -21,6 +22,9 @@ import YamlParse.Applicative.Pretty
 -- | Helper function to read a config file for a type in 'YamlSchema'
 readConfigFile :: (YamlSchema a, Yaml.FromJSON a) => Path r File -> IO (Maybe a)
 readConfigFile p = readFirstConfigFile [p]
+
+readConfigFileWithEnv :: (YamlSchema a, Yaml.FromJSON a) => Path r File -> IO (Maybe a)
+readConfigFileWithEnv p = readFirstConfigFileWithEnv [p]
 
 -- | Helper function to read the first in a list of config files
 readFirstConfigFile :: forall a r. (Yaml.FromJSON a, YamlSchema a) => [Path r File] -> IO (Maybe a)
@@ -59,3 +63,11 @@ readFirstConfigFile files = go files
                         referenceMsgs
                       ]
                 Right (ViaYamlSchema conf) -> pure $ Just conf
+
+readFirstConfigFileWithEnv :: forall a r. (Yaml.FromJSON a, YamlSchema a) => [Path r File] -> IO (Maybe a)
+readFirstConfigFileWithEnv files = go files
+  where
+    go :: [Path r File] -> IO (Maybe a)
+    go xs = case xs of
+              [] -> pure Nothing
+              (p: ps) -> Yaml.loadYamlSettings [toFilePath p] [] Yaml.useEnv
