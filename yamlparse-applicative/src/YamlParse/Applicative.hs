@@ -78,6 +78,8 @@ module YamlParse.Applicative
     maybeParser,
     eitherParser,
     extraParser,
+    branchParser,
+    failParser,
     (<?>),
     (<??>),
     requiredField,
@@ -132,6 +134,7 @@ module YamlParse.Applicative
 
     -- * Parsing a file
     readConfigFile,
+    readConfigFileWithEnv,
     readFirstConfigFile,
   )
 where

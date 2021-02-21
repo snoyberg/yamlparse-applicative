@@ -101,6 +101,10 @@ data Parser i o where
   -- | Add comments to the parser.
   -- This info will be used in the schema for documentation.
   ParseComment :: Text -> Parser i o -> Parser i o
+  -- | Branch on the following parser based on a previous parse. Useful for cases like branching on a type field.
+  ParseBranch :: Parser i key -> (key -> Parser i o) -> Parser i o
+  -- | Fail a parse with the given error message
+  ParseFail :: Text -> Parser i o
 
 instance Functor (Parser i) where
   fmap = ParseFmap
@@ -309,3 +313,7 @@ eitherParser func = ParseExtra $ \o -> case func o of
 -- Prefer 'eitherParser' if you can, use this if you don't have a 'Show' instance for your 'o'.
 extraParser :: (o -> Yaml.Parser u) -> Parser i o -> Parser i u
 extraParser = ParseExtra
+
+branchParser = ParseBranch
+
+failParser = ParseFail

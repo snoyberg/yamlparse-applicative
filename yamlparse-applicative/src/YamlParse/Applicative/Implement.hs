@@ -90,3 +90,7 @@ implementParser = go
         (p' : ps') -> go p' v <|> go (ParseAlt ps') v
       ParseFmap f p -> fmap f . go p
       ParseComment _ p -> go p
+      ParseBranch keyP valueP -> \v -> do
+        key <- go keyP v
+        go (valueP key) v
+      ParseFail t -> \_value -> fail $ T.unpack t

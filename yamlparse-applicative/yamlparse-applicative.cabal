@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.34.2.
+-- This file has been generated from package.yaml by hpack version 0.33.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: ded1b4f5ee3db66fbcd6e3f4573306cbe3dd7edae1f55ae9ab6de42b25805e58
+-- hash: 5950513e10401f89e561674328d6c2007a8e99e52c398909f631b470c54f291f
 
 name:           yamlparse-applicative
 version:        0.1.0.2
@@ -17,6 +17,8 @@ maintainer:     syd@cs-syd.eu
 copyright:      2020 Tom Sydney Kerckhove
 license:        MIT
 build-type:     Simple
+extra-source-files:
+    test/data/config.yaml
 
 source-repository head
   type: git
@@ -59,6 +61,7 @@ test-suite yamlparse-applicative-test
   main-is: Spec.hs
   other-modules:
       YamlParse.ApplicativeSpec
+      YamlParse.EnvSpec
       Paths_yamlparse_applicative
   hs-source-dirs:
       test
@@ -75,6 +78,7 @@ test-suite yamlparse-applicative-test
     , genvalidity-text
     , genvalidity-unordered-containers
     , hspec
+    , path
     , scientific
     , text
     , unordered-containers
